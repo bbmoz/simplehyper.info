@@ -1,0 +1,24 @@
+{
+  "name": "simplehyper.info",
+  "version": "0.0.1",
+  "description": "JavaScript Client-Side Hyper Vanilla Wallet Generator, forked from liteaddress.org and originally from bitaddress.org.",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "grunt-combine": "~0.8.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hyper-project/simplehyper.info.git"
+  },
+  "keywords": [
+    "hyper address wallet generator"
+  ],
+  "author": "meowball",
+  "license": "MIT",
+  "readmeFilename": "README"
+}

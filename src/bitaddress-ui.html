@@ -131,7 +131,7 @@
 </ul>
 
 <div id="generate">
-	<span id="generatelabelbitcoinaddress">Generating Hyper Address...</span><br />
+	<span id="generatelabelbitcoinaddress">Generating Hyper Address...</span><br /><br />
 	<span id="generatelabelmovemouse">MOVE your mouse around to add some extra randomness... </span><span id="mousemovelimit"></span><br />
 	<span id="generatelabelkeypress">OR type some random characters into this textbox</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
 	<div id="seedpooldisplay"></div>
@@ -148,7 +148,7 @@
 	<div id="keyarea" class="keyarea">
 		<div class="public">
 			<div class="pubaddress">
-				<span class="label" id="singlelabelbitcoinaddress">Hyper Address</span>
+				<span class="label" id="singlelabelbitcoinaddress">Hyper Address (compressed)</span>
 			</div>
 			<div id="qrcode_public" class="qrcode_public"></div>
 			<div class="pubaddress">
@@ -158,7 +158,7 @@
 		</div>
 		<div class="private">
 			<div class="privwif">
-				<span class="label" id="singlelabelprivatekey">Private Key (Wallet Import Format)</span>
+				<span class="label" id="singlelabelprivatekey">Private Key WIF (compressed)</span>
 			</div>
 			<div id="qrcode_private" class="qrcode_private"></div>
 			<div class="privwif">
@@ -404,12 +404,13 @@
 		<hr />
 		<div class="privqr">
 			<div class="item">
-				<span class="label"><span id="detaillabelprivwif">Private Key WIF<br />51 characters base58, starts with a</span> <span id="detailwifprefix">'5'</span></span>
+				<span class="label"><span id="detaillabelprivwif">Private Key WIF<br />51 characters base58, starts
+					with a</span> <span id="detailwifprefix">'6'</span></span>
 				<div id="detailqrcodeprivate" class="qrcode_private"></div>
 				<span class="output" id="detailprivwif"></span>
 			</div>
 			<div class="item right">
-				<span class="label"><span id="detaillabelprivwifcomp">Private Key WIF Compressed<br />52 characters base58, starts with a</span> <span id="detailcompwifprefix">'K' or 'L'</span></span>
+				<span class="label"><span id="detaillabelprivwifcomp">Private Key WIF Compressed<br />52 characters base58, starts with an</span> <span id="detailcompwifprefix">'R'</span></span>
 				<div id="detailqrcodeprivatecomp" class="qrcode_private"></div>
 				<span class="output" id="detailprivwifcomp"></span>
 			</div>

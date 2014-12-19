@@ -1,17 +1,17 @@
 /*!
-* Crypto-JS v2.5.4	PBKDF2.js
-* http://code.google.com/p/crypto-js/
-* Copyright (c) 2009-2013, Jeff Mott. All rights reserved.
-* http://code.google.com/p/crypto-js/wiki/License
-*/
+ * Crypto-JS v2.5.4	PBKDF2.js
+ * http://code.google.com/p/crypto-js/
+ * Copyright (c) 2009-2013, Jeff Mott. All rights reserved.
+ * http://code.google.com/p/crypto-js/wiki/License
+ */
 (function () {
 
 	// Shortcuts
 	var C = Crypto,
-		util = C.util,
-		charenc = C.charenc,
-		UTF8 = charenc.UTF8,
-		Binary = charenc.Binary;
+			util = C.util,
+			charenc = C.charenc,
+			UTF8 = charenc.UTF8,
+			Binary = charenc.Binary;
 
 	C.PBKDF2 = function (password, salt, keylen, options) {
 
@@ -22,7 +22,7 @@
 
 		// Defaults
 		var hasher = options && options.hasher || C.SHA1,
-			iterations = options && options.iterations || 1;
+				iterations = options && options.iterations || 1;
 
 		// Pseudo-random function
 		function PRF(password, salt) {
@@ -31,7 +31,7 @@
 
 		// Generate key
 		var derivedKeyBytes = [],
-			blockindex = 1;
+				blockindex = 1;
 		while (derivedKeyBytes.length < keylen) {
 			var block = PRF(password, salt.concat(util.wordsToBytes([blockindex])));
 			for (var u = block, i = 1; i < iterations; i++) {
@@ -46,8 +46,8 @@
 		derivedKeyBytes.length = keylen;
 
 		return options && options.asBytes ? derivedKeyBytes :
-		options && options.asString ? Binary.bytesToString(derivedKeyBytes) :
-		util.bytesToHex(derivedKeyBytes);
+				options && options.asString ? Binary.bytesToString(derivedKeyBytes) :
+						util.bytesToHex(derivedKeyBytes);
 
 	};
 

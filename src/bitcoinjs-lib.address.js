@@ -7,13 +7,13 @@ Bitcoin.Address = function (bytes) {
 	this.version = Bitcoin.Address.networkVersion;
 };
 
-Bitcoin.Address.networkVersion = 0x30; // mainnet
+Bitcoin.Address.networkVersion = 0x00; // mainnet
 
 /**
-* Serialize this object as a standard Bitcoin address.
-*
-* Returns the address as a base58-encoded string in the standardized format.
-*/
+ * Serialize this object as a standard Bitcoin address.
+ *
+ * Returns the address as a base58-encoded string in the standardized format.
+ */
 Bitcoin.Address.prototype.toString = function () {
 	// Get a copy of the hash
 	var hash = this.hash.slice(0);
@@ -30,8 +30,8 @@ Bitcoin.Address.prototype.getHashBase64 = function () {
 };
 
 /**
-* Parse a Bitcoin address contained in a string.
-*/
+ * Parse a Bitcoin address contained in a string.
+ */
 Bitcoin.Address.decodeString = function (string) {
 	var bytes = Bitcoin.Base58.decode(string);
 	var hash = bytes.slice(0, 21);

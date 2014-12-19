@@ -1,12 +1,12 @@
 //https://raw.github.com/bitcoinjs/bitcoinjs-lib/faa10f0f6a1fff0b9a99fffb9bc30cee33b17212/src/ecdsa.js
 /*!
-* Basic Javascript Elliptic Curve implementation
-* Ported loosely from BouncyCastle's Java EC code
-* Only Fp curves implemented for now
-* 
-* Copyright Tom Wu, bitaddress.org  BSD License.
-* http://www-cs-students.stanford.edu/~tjw/jsbn/LICENSE
-*/
+ * Basic Javascript Elliptic Curve implementation
+ * Ported loosely from BouncyCastle's Java EC code
+ * Only Fp curves implemented for now
+ *
+ * Copyright Tom Wu, bitaddress.org  BSD License.
+ * http://www-cs-students.stanford.edu/~tjw/jsbn/LICENSE
+ */
 (function () {
 
 	// Constructor function of Global EllipticCurve object
@@ -62,12 +62,12 @@
 
 	// D.1.4 91
 	/**
-	* return a sqrt root - the routine verifies that the calculation
-	* returns the right value - if none exists it returns null.
-	* 
-	* Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
-	* Ported to JavaScript by bitaddress.org
-	*/
+	 * return a sqrt root - the routine verifies that the calculation
+	 * returns the right value - if none exists it returns null.
+	 *
+	 * Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
+	 * Ported to JavaScript by bitaddress.org
+	 */
 	ec.FieldElementFp.prototype.sqrt = function () {
 		if (!this.q.testBit(0)) throw new Error("even value of q");
 
@@ -115,9 +115,9 @@
 	};
 
 	/*
-	* Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
-	* Ported to JavaScript by bitaddress.org
-	*/
+	 * Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
+	 * Ported to JavaScript by bitaddress.org
+	 */
 	ec.FieldElementFp.fastLucasSequence = function (p, P, Q, k) {
 		// TODO Research and apply "common-multiplicand multiplication here"
 
@@ -183,14 +183,18 @@
 		if (this.zinv == null) {
 			this.zinv = this.z.modInverse(this.curve.q);
 		}
-		return this.curve.fromBigInteger(this.x.toBigInteger().multiply(this.zinv).mod(this.curve.q));
+		var r = this.x.toBigInteger().multiply(this.zinv);
+		this.curve.reduce(r);
+		return this.curve.fromBigInteger(r);
 	};
 
 	ec.PointFp.prototype.getY = function () {
 		if (this.zinv == null) {
 			this.zinv = this.z.modInverse(this.curve.q);
 		}
-		return this.curve.fromBigInteger(this.y.toBigInteger().multiply(this.zinv).mod(this.curve.q));
+		var r = this.y.toBigInteger().multiply(this.zinv);
+		this.curve.reduce(r);
+		return this.curve.fromBigInteger(r);
 	};
 
 	ec.PointFp.prototype.equals = function (other) {
@@ -272,6 +276,7 @@
 			w = w.add(this.z.square().multiply(a));
 		}
 		w = w.mod(this.curve.q);
+		//this.curve.reduce(w);
 		// x3 = 2 * y1 * z1 * (w^2 - 8 * x1 * y1^2 * z1)
 		var x3 = w.square().subtract(x1.shiftLeft(3).multiply(y1sqz1)).shiftLeft(1).multiply(y1z1).mod(this.curve.q);
 		// y3 = 4 * y1^2 * z1 * (3 * w * x1 - 2 * y1^2 * z1) - w^3
@@ -466,10 +471,10 @@
 	};
 
 	/**
-	* Validate an elliptic curve point.
-	*
-	* See SEC 1, section 3.2.2.1: Elliptic Curve Public Key Validation Primitive
-	*/
+	 * Validate an elliptic curve point.
+	 *
+	 * See SEC 1, section 3.2.2.1: Elliptic Curve Public Key Validation Primitive
+	 */
 	ec.PointFp.prototype.validate = function () {
 		var n = this.curve.getQ();
 
@@ -512,6 +517,7 @@
 		this.a = this.fromBigInteger(a);
 		this.b = this.fromBigInteger(b);
 		this.infinity = new ec.PointFp(this, null, null);
+		this.reducer = new Barrett(this.q);
 	}
 
 	ec.CurveFp.prototype.getQ = function () {
@@ -539,6 +545,10 @@
 		return new ec.FieldElementFp(this.q, x);
 	};
 
+	ec.CurveFp.prototype.reduce = function (x) {
+		this.reducer.reduce(x);
+	};
+
 	// for now, work with hex strings because they're easier in JS
 	// compressed support added by bitaddress.org
 	ec.CurveFp.prototype.decodePointHex = function (s) {
@@ -560,21 +570,36 @@
 				var yHex = s.substr(len + 2, len);
 
 				return new ec.PointFp(this,
-					this.fromBigInteger(new BigInteger(xHex, 16)),
-					this.fromBigInteger(new BigInteger(yHex, 16)));
+						this.fromBigInteger(new BigInteger(xHex, 16)),
+						this.fromBigInteger(new BigInteger(yHex, 16)));
 
 			default: // unsupported
 				return null;
 		}
 	};
 
+	ec.CurveFp.prototype.encodePointHex = function (p) {
+		if (p.isInfinity()) return "00";
+		var xHex = p.getX().toBigInteger().toString(16);
+		var yHex = p.getY().toBigInteger().toString(16);
+		var oLen = this.getQ().toString(16).length;
+		if ((oLen % 2) != 0) oLen++;
+		while (xHex.length < oLen) {
+			xHex = "0" + xHex;
+		}
+		while (yHex.length < oLen) {
+			yHex = "0" + yHex;
+		}
+		return "04" + xHex + yHex;
+	};
+
 	/*
-	* Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
-	* Ported to JavaScript by bitaddress.org
-	*
-	* Number yTilde
-	* BigInteger X1
-	*/
+	 * Copyright (c) 2000 - 2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
+	 * Ported to JavaScript by bitaddress.org
+	 *
+	 * Number yTilde
+	 * BigInteger X1
+	 */
 	ec.CurveFp.prototype.decompressPoint = function (yTilde, X1) {
 		var x = this.fromBigInteger(X1);
 		var alpha = x.multiply(x.square().add(this.getA())).add(this.getB());
@@ -630,8 +655,8 @@
 			var h = BigInteger.ONE;
 			var curve = new ec.CurveFp(p, a, b);
 			var G = curve.decodePointHex("04"
-					+ "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"
-					+ "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8");
+			+ "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"
+			+ "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8");
 			return new ec.X9Parameters(curve, G, n, h);
 		}
 	};

@@ -30,7 +30,9 @@ Bitcoin.ECKey = (function () {
 				bytes = Crypto.util.base64ToBytes(input);
 			}
 
-			if (bytes == null || bytes.length != 32) {
+			if (ECKey.isBase6Format(input)) {
+				this.priv = new BigInteger(input, 6);
+			} else if (bytes == null || bytes.length != 32) {
 				this.priv = null;
 			} else {
 				// Prepend zero byte to prevent interpretation as negative integer
@@ -41,16 +43,16 @@ Bitcoin.ECKey = (function () {
 		this.compressed = (this.compressed == undefined) ? !!ECKey.compressByDefault : this.compressed;
 	};
 
-	ECKey.privateKeyPrefix = 0xb0; // mainnet 0xb0    testnet 0xEF
+	ECKey.privateKeyPrefix = 0x80; // mainnet 0x80    testnet 0xEF
 
 	/**
-	* Whether public keys should be returned compressed by default.
-	*/
+	 * Whether public keys should be returned compressed by default.
+	 */
 	ECKey.compressByDefault = false;
 
 	/**
-	* Set whether the public key should be returned compressed or not.
-	*/
+	 * Set whether the public key should be returned compressed or not.
+	 */
 	ECKey.prototype.setCompressed = function (v) {
 		this.compressed = !!v;
 		if (this.pubPoint) this.pubPoint.compressed = this.compressed;
@@ -58,8 +60,8 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/*
-	* Return public key as a byte array in DER encoding
-	*/
+	 * Return public key as a byte array in DER encoding
+	 */
 	ECKey.prototype.getPub = function () {
 		if (this.compressed) {
 			if (this.pubComp) return this.pubComp;
@@ -71,8 +73,8 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/**
-	* Return public point as ECPoint object.
-	*/
+	 * Return public point as ECPoint object.
+	 */
 	ECKey.prototype.getPubPoint = function () {
 		if (!this.pubPoint) {
 			this.pubPoint = ecparams.getG().multiply(this.priv);
@@ -92,11 +94,11 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/**
-	* Get the pubKeyHash for this key.
-	*
-	* This is calculated as RIPE160(SHA256([encoded pubkey])) and returned as
-	* a byte array.
-	*/
+	 * Get the pubKeyHash for this key.
+	 *
+	 * This is calculated as RIPE160(SHA256([encoded pubkey])) and returned as
+	 * a byte array.
+	 */
 	ECKey.prototype.getPubKeyHash = function () {
 		if (this.compressed) {
 			if (this.pubKeyHashComp) return this.pubKeyHashComp;
@@ -114,8 +116,8 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/*
-	* Takes a public point as a hex string or byte array
-	*/
+	 * Takes a public point as a hex string or byte array
+	 */
 	ECKey.prototype.setPub = function (pub) {
 		// byte array
 		if (Bitcoin.Util.isArray(pub)) {
@@ -179,16 +181,16 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/**
-	* Parse a wallet import format private key contained in a string.
-	*/
+	 * Parse a wallet import format private key contained in a string.
+	 */
 	ECKey.decodeWalletImportFormat = function (privStr) {
 		var bytes = Bitcoin.Base58.decode(privStr);
 		var hash = bytes.slice(0, 33);
 		var checksum = Crypto.SHA256(Crypto.SHA256(hash, { asBytes: true }), { asBytes: true });
 		if (checksum[0] != bytes[33] ||
-					checksum[1] != bytes[34] ||
-					checksum[2] != bytes[35] ||
-					checksum[3] != bytes[36]) {
+				checksum[1] != bytes[34] ||
+				checksum[2] != bytes[35] ||
+				checksum[3] != bytes[36]) {
 			throw "Checksum validation failed!";
 		}
 		var version = hash.shift();
@@ -199,16 +201,16 @@ Bitcoin.ECKey = (function () {
 	};
 
 	/**
-	* Parse a compressed wallet import format private key contained in a string.
-	*/
+	 * Parse a compressed wallet import format private key contained in a string.
+	 */
 	ECKey.decodeCompressedWalletImportFormat = function (privStr) {
 		var bytes = Bitcoin.Base58.decode(privStr);
 		var hash = bytes.slice(0, 34);
 		var checksum = Crypto.SHA256(Crypto.SHA256(hash, { asBytes: true }), { asBytes: true });
 		if (checksum[0] != bytes[34] ||
-					checksum[1] != bytes[35] ||
-					checksum[2] != bytes[36] ||
-					checksum[3] != bytes[37]) {
+				checksum[1] != bytes[35] ||
+				checksum[2] != bytes[36] ||
+				checksum[3] != bytes[37]) {
 			throw "Checksum validation failed!";
 		}
 		var version = hash.shift();
@@ -225,26 +227,32 @@ Bitcoin.ECKey = (function () {
 		return /^[A-Fa-f0-9]{64}$/.test(key);
 	};
 
-	// 51 characters base58, always starts with a '6'
+	// 51 characters base58, always starts with a '5'
 	ECKey.isWalletImportFormat = function (key) {
 		key = key.toString();
-		return (ECKey.privateKeyPrefix == 0xb0) ?
-							(/^6[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/.test(key)) :
-							(/^9[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/.test(key));
+		return (ECKey.privateKeyPrefix == 0x80) ?
+				(/^5[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/.test(key)) :
+				(/^9[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{50}$/.test(key));
 	};
 
 	// 52 characters base58
 	ECKey.isCompressedWalletImportFormat = function (key) {
 		key = key.toString();
-		return (ECKey.privateKeyPrefix == 0xb0) ?
-							(/^T[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/.test(key)) :
-							(/^c[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/.test(key));
+		return (ECKey.privateKeyPrefix == 0x80) ?
+				(/^[LK][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/.test(key)) :
+				(/^c[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{51}$/.test(key));
 	};
 
 	// 44 characters
 	ECKey.isBase64Format = function (key) {
 		key = key.toString();
 		return (/^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789=+\/]{44}$/.test(key));
+	};
+
+	// 99 characters, 1=1, if using dice convert 6 to 0
+	ECKey.isBase6Format = function (key) {
+		key = key.toString();
+		return (/^[012345]{99}$/.test(key));
 	};
 
 	// 22, 26 or 30 characters, always starts with an 'S'

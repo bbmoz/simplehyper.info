@@ -1,17 +1,17 @@
 /*!
-* Crypto-JS v2.5.4	HMAC.js
-* http://code.google.com/p/crypto-js/
-* Copyright (c) 2009-2013, Jeff Mott. All rights reserved.
-* http://code.google.com/p/crypto-js/wiki/License
-*/
+ * Crypto-JS v2.5.4	HMAC.js
+ * http://code.google.com/p/crypto-js/
+ * Copyright (c) 2009-2013, Jeff Mott. All rights reserved.
+ * http://code.google.com/p/crypto-js/wiki/License
+ */
 (function () {
 
 	// Shortcuts
 	var C = Crypto,
-		util = C.util,
-		charenc = C.charenc,
-		UTF8 = charenc.UTF8,
-		Binary = charenc.Binary;
+			util = C.util,
+			charenc = C.charenc,
+			UTF8 = charenc.UTF8,
+			Binary = charenc.Binary;
 
 	C.HMAC = function (hasher, message, key, options) {
 
@@ -26,7 +26,7 @@
 
 		// XOR keys with pad constants
 		var okey = key.slice(0),
-			ikey = key.slice(0);
+				ikey = key.slice(0);
 		for (var i = 0; i < hasher._blocksize * 4; i++) {
 			okey[i] ^= 0x5C;
 			ikey[i] ^= 0x36;
@@ -35,8 +35,8 @@
 		var hmacbytes = hasher(okey.concat(hasher(ikey.concat(message), { asBytes: true })), { asBytes: true });
 
 		return options && options.asBytes ? hmacbytes :
-		options && options.asString ? Binary.bytesToString(hmacbytes) :
-		util.bytesToHex(hmacbytes);
+				options && options.asString ? Binary.bytesToString(hmacbytes) :
+						util.bytesToHex(hmacbytes);
 
 	};
 

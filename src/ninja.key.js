@@ -3,12 +3,12 @@ var ninja = { wallets: {} };
 ninja.privateKey = {
 	isPrivateKey: function (key) {
 		return (
-					Bitcoin.ECKey.isWalletImportFormat(key) ||
-					Bitcoin.ECKey.isCompressedWalletImportFormat(key) ||
-					Bitcoin.ECKey.isHexFormat(key) ||
-					Bitcoin.ECKey.isBase64Format(key) ||
-					Bitcoin.ECKey.isMiniFormat(key)
-				);
+		Bitcoin.ECKey.isWalletImportFormat(key) ||
+		Bitcoin.ECKey.isCompressedWalletImportFormat(key) ||
+		Bitcoin.ECKey.isHexFormat(key) ||
+		Bitcoin.ECKey.isBase64Format(key) ||
+		Bitcoin.ECKey.isMiniFormat(key)
+		);
 	},
 	getECKeyFromAdding: function (privKey1, privKey2) {
 		var n = EllipticCurve.getSECCurveByName("secp256k1").getN();

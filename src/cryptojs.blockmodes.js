@@ -1,7 +1,7 @@
 /*!
-* Crypto-JS 2.5.4 BlockModes.js
-* contribution from Simon Greatrix
-*/
+ * Crypto-JS 2.5.4 BlockModes.js
+ * contribution from Simon Greatrix
+ */
 
 (function (C) {
 
@@ -150,8 +150,8 @@
 	var C_mode = C.mode = {};
 
 	/**
-	* Mode base "class".
-	*/
+	 * Mode base "class".
+	 */
 	var Mode = C_mode.Mode = function (padding) {
 		if (padding) {
 			this._padding = padding;
@@ -175,12 +175,12 @@
 
 
 	/**
-	* Electronic Code Book mode.
-	* 
-	* ECB applies the cipher directly against each block of the input.
-	* 
-	* ECB does not require an initialization vector.
-	*/
+	 * Electronic Code Book mode.
+	 *
+	 * ECB applies the cipher directly against each block of the input.
+	 *
+	 * ECB does not require an initialization vector.
+	 */
 	var ECB = C_mode.ECB = function () {
 		// Call parent constructor
 		Mode.apply(this, arguments);
@@ -212,11 +212,11 @@
 
 
 	/**
-	* Cipher block chaining
-	* 
-	* The first block is XORed with the IV. Subsequent blocks are XOR with the
-	* previous cipher output.
-	*/
+	 * Cipher block chaining
+	 *
+	 * The first block is XORed with the IV. Subsequent blocks are XOR with the
+	 * previous cipher output.
+	 */
 	var CBC = C_mode.CBC = function () {
 		// Call parent constructor
 		Mode.apply(this, arguments);
@@ -266,14 +266,14 @@
 
 
 	/**
-	* Cipher feed back
-	* 
-	* The cipher output is XORed with the plain text to produce the cipher output,
-	* which is then fed back into the cipher to produce a bit pattern to XOR the
-	* next block with.
-	* 
-	* This is a stream cipher mode and does not require padding.
-	*/
+	 * Cipher feed back
+	 *
+	 * The cipher output is XORed with the plain text to produce the cipher output,
+	 * which is then fed back into the cipher to produce a bit pattern to XOR the
+	 * next block with.
+	 *
+	 * This is a stream cipher mode and does not require padding.
+	 */
 	var CFB = C_mode.CFB = function () {
 		// Call parent constructor
 		Mode.apply(this, arguments);
@@ -288,7 +288,7 @@
 	// Concrete steps for Mode template
 	CFB_prototype._doEncrypt = function (cipher, m, iv) {
 		var blockSizeInBytes = cipher._blocksize * 4,
-    keystream = iv.slice(0);
+				keystream = iv.slice(0);
 
 		// Encrypt each byte
 		for (var i = 0; i < m.length; i++) {
@@ -302,7 +302,7 @@
 	};
 	CFB_prototype._doDecrypt = function (cipher, c, iv) {
 		var blockSizeInBytes = cipher._blocksize * 4,
-			keystream = iv.slice(0);
+				keystream = iv.slice(0);
 
 		// Encrypt each byte
 		for (var i = 0; i < c.length; i++) {
@@ -318,13 +318,13 @@
 
 
 	/**
-	* Output feed back
-	* 
-	* The cipher repeatedly encrypts its own output. The output is XORed with the
-	* plain text to produce the cipher text.
-	* 
-	* This is a stream cipher mode and does not require padding.
-	*/
+	 * Output feed back
+	 *
+	 * The cipher repeatedly encrypts its own output. The output is XORed with the
+	 * plain text to produce the cipher text.
+	 *
+	 * This is a stream cipher mode and does not require padding.
+	 */
 	var OFB = C_mode.OFB = function () {
 		// Call parent constructor
 		Mode.apply(this, arguments);
@@ -340,7 +340,7 @@
 	OFB_prototype._doEncrypt = function (cipher, m, iv) {
 
 		var blockSizeInBytes = cipher._blocksize * 4,
-			keystream = iv.slice(0);
+				keystream = iv.slice(0);
 
 		// Encrypt each byte
 		for (var i = 0; i < m.length; i++) {
@@ -357,14 +357,14 @@
 	OFB_prototype._doDecrypt = OFB_prototype._doEncrypt;
 
 	/**
-	* Counter
-	* @author Gergely Risko
-	*
-	* After every block the last 4 bytes of the IV is increased by one
-	* with carry and that IV is used for the next block.
-	*
-	* This is a stream cipher mode and does not require padding.
-	*/
+	 * Counter
+	 * @author Gergely Risko
+	 *
+	 * After every block the last 4 bytes of the IV is increased by one
+	 * with carry and that IV is used for the next block.
+	 *
+	 * This is a stream cipher mode and does not require padding.
+	 */
 	var CTR = C_mode.CTR = function () {
 		// Call parent constructor
 		Mode.apply(this, arguments);

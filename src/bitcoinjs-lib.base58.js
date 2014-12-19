@@ -6,13 +6,13 @@
 		base: BigInteger.valueOf(58),
 
 		/**
-		* Convert a byte array to a base58-encoded string.
-		*
-		* Written by Mike Hearn for BitcoinJ.
-		*   Copyright (c) 2011 Google Inc.
-		*
-		* Ported to JavaScript by Stefan Thomas.
-		*/
+		 * Convert a byte array to a base58-encoded string.
+		 *
+		 * Written by Mike Hearn for BitcoinJ.
+		 *   Copyright (c) 2011 Google Inc.
+		 *
+		 * Ported to JavaScript by Stefan Thomas.
+		 */
 		encode: function (input) {
 			var bi = BigInteger.fromByteArrayUnsigned(input);
 			var chars = [];
@@ -35,13 +35,13 @@
 		},
 
 		/**
-		* Convert a base58-encoded string to a byte array.
-		*
-		* Written by Mike Hearn for BitcoinJ.
-		*   Copyright (c) 2011 Google Inc.
-		*
-		* Ported to JavaScript by Stefan Thomas.
-		*/
+		 * Convert a base58-encoded string to a byte array.
+		 *
+		 * Written by Mike Hearn for BitcoinJ.
+		 *   Copyright (c) 2011 Google Inc.
+		 *
+		 * Ported to JavaScript by Stefan Thomas.
+		 */
 		decode: function (input) {
 			var bi = BigInteger.valueOf(0);
 			var leadingZerosNum = 0;
@@ -51,7 +51,7 @@
 					throw "Invalid character";
 				}
 				bi = bi.add(BigInteger.valueOf(alphaIndex)
-								.multiply(B58.base.pow(input.length - 1 - i)));
+						.multiply(B58.base.pow(input.length - 1 - i)));
 
 				// This counts leading zero bytes
 				if (input[i] == "1") leadingZerosNum++;
@@ -68,5 +68,5 @@
 
 	var B58 = Bitcoin.Base58;
 })(
-	'undefined' != typeof Bitcoin ? Bitcoin : module.exports
+		'undefined' != typeof Bitcoin ? Bitcoin : module.exports
 );

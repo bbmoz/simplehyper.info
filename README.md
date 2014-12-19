@@ -1,5 +1,4 @@
 Copyright (c) 2014 simplehyper.info <br />
-Copyright (c) 2012-2013 liteaddress.org <br />
 Copyright (c) 2011-2013 bitaddress.org <br />
 
 JavaScript Client-Side HYPER Vanilla Wallet
@@ -9,7 +8,8 @@ Hyper addresses and their corresponding private key can be conveniently
 generated in a web browser. However, users cannot receive stakes or manage their Hyper in any way, so  
 they must ensure that the generated private key is stored in a safe location before using the generated public address.
 
-The simplehyper.info project is a fork of the <a href="https://github.com/litecoin-project/liteaddress.org" target="_blank">liteaddress.org project</a>.
+The simplehyper.info project is inspired by the <a href="https://github.com/pointbiz/bitaddress.org"
+target="_blank">bitaddress.org project</a>.
 
 The simplehyper.info project provides an all-in-one HTML document with embedded
 JavaScript/Css/Images. The JavaScript is readable (not minified) and contains

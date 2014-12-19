@@ -1,7 +1,7 @@
 {
   "name": "simplehyper.info",
-  "version": "0.0.1",
-  "description": "JavaScript Client-Side Hyper Vanilla Wallet Generator inspired from liteaddress.org and originally from bitaddress.org.",
+  "version": "0.1.0",
+  "description": "JavaScript Client-Side Hyper Vanilla Wallet Generator inspired by bitaddress.org.",
   "main": "Gruntfile.js",
   "dependencies": {
     "grunt": "~0.4.5",

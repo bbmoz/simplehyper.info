@@ -2,14 +2,14 @@
 // Bitcoin utility functions
 Bitcoin.Util = {
 	/**
-	* Cross-browser compatibility version of Array.isArray.
-	*/
+	 * Cross-browser compatibility version of Array.isArray.
+	 */
 	isArray: Array.isArray || function (o) {
 		return Object.prototype.toString.call(o) === '[object Array]';
 	},
 	/**
-	* Create an array of a certain length filled with a specific value.
-	*/
+	 * Create an array of a certain length filled with a specific value.
+	 */
 	makeFilledArray: function (len, val) {
 		var array = [];
 		var i = 0;
@@ -19,12 +19,12 @@ Bitcoin.Util = {
 		return array;
 	},
 	/**
-	* Turn an integer into a "var_int".
-	*
-	* "var_int" is a variable length integer used by Bitcoin's binary format.
-	*
-	* Returns a byte array.
-	*/
+	 * Turn an integer into a "var_int".
+	 *
+	 * "var_int" is a variable length integer used by Bitcoin's binary format.
+	 *
+	 * Returns a byte array.
+	 */
 	numToVarInt: function (i) {
 		if (i < 0xfd) {
 			// unsigned char
@@ -41,8 +41,8 @@ Bitcoin.Util = {
 		}
 	},
 	/**
-	* Parse a Bitcoin value byte array, returning a BigInteger.
-	*/
+	 * Parse a Bitcoin value byte array, returning a BigInteger.
+	 */
 	valueToBigInt: function (valueBuffer) {
 		if (valueBuffer instanceof BigInteger) return valueBuffer;
 
@@ -50,17 +50,17 @@ Bitcoin.Util = {
 		return BigInteger.fromByteArrayUnsigned(valueBuffer);
 	},
 	/**
-	* Format a Bitcoin value as a string.
-	*
-	* Takes a BigInteger or byte-array and returns that amount of Bitcoins in a
-	* nice standard formatting.
-	*
-	* Examples:
-	* 12.3555
-	* 0.1234
-	* 900.99998888
-	* 34.00
-	*/
+	 * Format a Bitcoin value as a string.
+	 *
+	 * Takes a BigInteger or byte-array and returns that amount of Bitcoins in a
+	 * nice standard formatting.
+	 *
+	 * Examples:
+	 * 12.3555
+	 * 0.1234
+	 * 900.99998888
+	 * 34.00
+	 */
 	formatValue: function (valueBuffer) {
 		var value = this.valueToBigInt(valueBuffer).toString();
 		var integerPart = value.length > 8 ? value.substr(0, value.length - 8) : '0';
@@ -71,12 +71,12 @@ Bitcoin.Util = {
 		return integerPart + "." + decimalPart;
 	},
 	/**
-	* Parse a floating point string as a Bitcoin value.
-	*
-	* Keep in mind that parsing user input is messy. You should always display
-	* the parsed value back to the user to make sure we understood his input
-	* correctly.
-	*/
+	 * Parse a floating point string as a Bitcoin value.
+	 *
+	 * Keep in mind that parsing user input is messy. You should always display
+	 * the parsed value back to the user to make sure we understood his input
+	 * correctly.
+	 */
 	parseValue: function (valueString) {
 		// TODO: Detect other number formats (e.g. comma as decimal separator)
 		var valueComp = valueString.split('.');
@@ -90,11 +90,11 @@ Bitcoin.Util = {
 		return value;
 	},
 	/**
-	* Calculate RIPEMD160(SHA256(data)).
-	*
-	* Takes an arbitrary byte array as inputs and returns the hash as a byte
-	* array.
-	*/
+	 * Calculate RIPEMD160(SHA256(data)).
+	 *
+	 * Takes an arbitrary byte array as inputs and returns the hash as a byte
+	 * array.
+	 */
 	sha256ripe160: function (data) {
 		return Crypto.RIPEMD160(Crypto.SHA256(data, { asBytes: true }), { asBytes: true });
 	},

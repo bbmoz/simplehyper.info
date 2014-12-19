@@ -34,8 +34,8 @@ Bitcoin.ECDSA = (function () {
 	var ECDSA = {
 		getBigRandom: function (limit) {
 			return new BigInteger(limit.bitLength(), rng)
-				.mod(limit.subtract(BigInteger.ONE))
-				.add(BigInteger.ONE);
+					.mod(limit.subtract(BigInteger.ONE))
+					.add(BigInteger.ONE);
 		},
 		sign: function (hash, priv) {
 			var d = priv;
@@ -85,11 +85,11 @@ Bitcoin.ECDSA = (function () {
 			var G = ecparams.getG();
 
 			if (r.compareTo(BigInteger.ONE) < 0 ||
-          r.compareTo(n) >= 0)
+					r.compareTo(n) >= 0)
 				return false;
 
 			if (s.compareTo(BigInteger.ONE) < 0 ||
-          s.compareTo(n) >= 0)
+					s.compareTo(n) >= 0)
 				return false;
 
 			var c = s.modInverse(n);
@@ -109,10 +109,10 @@ Bitcoin.ECDSA = (function () {
 		},
 
 		/**
-		* Serialize a signature into DER format.
-		*
-		* Takes two BigIntegers representing r and s and returns a byte array.
-		*/
+		 * Serialize a signature into DER format.
+		 *
+		 * Takes two BigIntegers representing r and s and returns a byte array.
+		 */
 		serializeSig: function (r, s) {
 			var rBa = r.toByteArraySigned();
 			var sBa = s.toByteArraySigned();
@@ -133,15 +133,15 @@ Bitcoin.ECDSA = (function () {
 		},
 
 		/**
-		* Parses a byte array containing a DER-encoded signature.
-		*
-		* This function will return an object of the form:
-		* 
-		* {
+		 * Parses a byte array containing a DER-encoded signature.
+		 *
+		 * This function will return an object of the form:
+		 *
+		 * {
 		*   r: BigInteger,
 		*   s: BigInteger
 		* }
-		*/
+		 */
 		parseSig: function (sig) {
 			var cursor;
 			if (sig[0] != 0x30)
@@ -188,13 +188,13 @@ Bitcoin.ECDSA = (function () {
 		},
 
 		/**
-		* Recover a public key from a signature.
-		*
-		* See SEC 1: Elliptic Curve Cryptography, section 4.1.6, "Public
-		* Key Recovery Operation".
-		*
-		* http://www.secg.org/download/aid-780/sec1-v2.pdf
-		*/
+		 * Recover a public key from a signature.
+		 *
+		 * See SEC 1: Elliptic Curve Cryptography, section 4.1.6, "Public
+		 * Key Recovery Operation".
+		 *
+		 * http://www.secg.org/download/aid-780/sec1-v2.pdf
+		 */
 		recoverPubKey: function (r, s, hash, i) {
 			// The recovery parameter i has two bits.
 			i = i & 3;
@@ -233,8 +233,8 @@ Bitcoin.ECDSA = (function () {
 
 			// 1.4 Check that nR is at infinity
 			var R = new EllipticCurve.PointFp(curve,
-                            curve.fromBigInteger(x),
-                            curve.fromBigInteger(y));
+					curve.fromBigInteger(x),
+					curve.fromBigInteger(y));
 			R.validate();
 
 			// 1.5 Compute e from M
@@ -256,16 +256,16 @@ Bitcoin.ECDSA = (function () {
 		},
 
 		/**
-		* Calculate pubkey extraction parameter.
-		*
-		* When extracting a pubkey from a signature, we have to
-		* distinguish four different cases. Rather than putting this
-		* burden on the verifier, Bitcoin includes a 2-bit value with the
-		* signature.
-		*
-		* This function simply tries all four cases and returns the value
-		* that resulted in a successful pubkey recovery.
-		*/
+		 * Calculate pubkey extraction parameter.
+		 *
+		 * When extracting a pubkey from a signature, we have to
+		 * distinguish four different cases. Rather than putting this
+		 * burden on the verifier, Bitcoin includes a 2-bit value with the
+		 * signature.
+		 *
+		 * This function simply tries all four cases and returns the value
+		 * that resulted in a successful pubkey recovery.
+		 */
 		calcPubkeyRecoveryParam: function (address, r, s, hash) {
 			for (var i = 0; i < 4; i++) {
 				try {

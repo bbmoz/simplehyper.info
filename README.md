@@ -8,13 +8,13 @@ Hyper addresses and their corresponding private key can be conveniently
 generated in a web browser. However, users cannot receive stakes or manage their Hyper in any way, so  
 they must ensure that the generated private key is stored in a safe location before using the generated public address.
 
-The simplehyper.info project is inspired by the <a href="https://github.com/pointbiz/bitaddress.org"
-target="_blank">bitaddress.org project</a>.
+The SimpleHyper.info project is inspired by <a href="https://github.com/pointbiz/bitaddress.org"
+target="_blank">bitaddress.org</a>.
 
-The simplehyper.info project provides an all-in-one HTML document with embedded
-JavaScript/Css/Images. The JavaScript is readable (not minified) and contains
-simple API GET requests to the <a href="http://hyper.blockexplorer.cc/chain/Hyper/q" target="_blank">Hyper block explorer</a>. 
-The benefit of this technique is you can load the JavaScript locally and trust that the JavaScript did not change after being loaded. 
+SimpleHyper.info provides an all-in-one HTML document with embedded
+JavaScript/Css/Images. The JavaScript is readable (not minified) and does not perform any server calls.
+The benefit of this technique is you can load the JavaScript locally and trust that the JavaScript did not change after being loaded.
+In addition, all images have been converted to Base64.
 
 Here is a link to the BitcoinTalk.org forum topic discussing the original bitaddress.org project:
 https://bitcointalk.org/index.php?topic=43496.0
@@ -32,8 +32,8 @@ END USER NOTES:
 
 Notice of Copyrights and Licenses
 ---------------------------------------
-The simplehyper.info project, software and embedded resources are copyright simplehyper.info. 
-The simplehyper.info name and logo are not part of the open source license. Otherwise, the simplehyper.info software is available under The MIT License (MIT).
+The SimpleHyper.info project, software and embedded resources are copyright SimpleHyper.info.
+The SimpleHyper.info name and logo are not part of the open source license. Otherwise, the SimpleHyper.info software is available under The MIT License (MIT).
 
 Portions of the all-in-one HTML document contain JavaScript codes that are the copyrights 
 of others. The individual copyrights are included throughout the document along with their 

@@ -1,3 +1,5 @@
+<img src="https://badge.fury.io/gh/hyper-project%2Fsimplehyper.info.svg" /> <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" />
+
 Copyright (c) 2014 simplehyper.info <br />
 Copyright (c) 2011-2013 bitaddress.org <br />
 

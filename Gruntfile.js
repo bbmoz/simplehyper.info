@@ -1,11 +1,16 @@
 module.exports = function (grunt) {
+	var dirPath = './build/';
+
+	// Build folder
+	grunt.file.mkdir(dirPath);
+
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		combine: {
 			single: {
 				input: "./src/bitaddress-ui.html",
-				output: "./simplehyper.info.html",
+				output: "./build/simplehyper.info.html",
 				tokens: [
 					{ token: "//array.map.js", file: "./src/array.map.js" },
 					{ token: "//biginteger.js", file: "./src/biginteger.js" },

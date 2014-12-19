@@ -1,7 +1,7 @@
 Copyright (c) 2014 simplehyper.info <br />
 Copyright (c) 2011-2013 bitaddress.org <br />
 
-JavaScript Client-Side HYPER Vanilla Wallet
+SimpleHyper.info - Client-Side HYPER Vanilla Wallet
 ---------------------------------------
 
 Hyper addresses and their corresponding private key can be conveniently 

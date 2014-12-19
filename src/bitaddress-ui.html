@@ -45,7 +45,7 @@
 	GitHub Repository: https://github.com/hyper-project/simplehyper.info
 	-->
 
-	<title>simplehyper.info</title>
+	<title>SimpleHyper.info</title>
 	<meta charset="utf-8">
 
 	<script>
@@ -131,7 +131,7 @@
 </ul>
 
 <div id="generate">
-	<span id="generatelabelbitcoinaddress">Generating Hyper Address...</span><br /><br />
+	<span id="generatelabelbitcoinaddress"><strong>Generating Hyper Address...</strong></span><br /><br />
 	<span id="generatelabelmovemouse">MOVE your mouse around to add some extra randomness... </span><span id="mousemovelimit"></span><br />
 	<span id="generatelabelkeypress">OR type some random characters into this textbox</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
 	<div id="seedpooldisplay"></div>
@@ -148,7 +148,7 @@
 	<div id="keyarea" class="keyarea">
 		<div class="public">
 			<div class="pubaddress">
-				<span class="label" id="singlelabelbitcoinaddress">Hyper Address (compressed)</span>
+				<span class="label" id="singlelabelbitcoinaddress">Hyper Address</span>
 			</div>
 			<div id="qrcode_public" class="qrcode_public"></div>
 			<div class="pubaddress">
@@ -158,7 +158,7 @@
 		</div>
 		<div class="private">
 			<div class="privwif">
-				<span class="label" id="singlelabelprivatekey">Private Key WIF (compressed)</span>
+				<span class="label" id="singlelabelprivatekey">Private Key WIF</span>
 			</div>
 			<div id="qrcode_private" class="qrcode_private"></div>
 			<div class="privwif">
@@ -169,12 +169,14 @@
 	</div>
 
 	<div id="singlesafety">
-		<p id="singletip1"><b>A Hyper wallet</b> is as simple as a single pairing of a Hyper address with its corresponding Hyper private key. Such a wallet has been generated for you in your web browser and is displayed above.</p>
-		<p id="singletip2"><b>To safeguard this wallet</b> you must print or otherwise record the Hyper address and private key. It is important to make a backup copy of the private key and store it in a safe location. This site does not have knowledge of your private key. If you are familiar with PGP you can download this all-in-one HTML page and check that you have an authentic version from the author of this site by matching the SHA1 hash of this HTML with the SHA1 hash available in the signed version history document linked on the footer of this site. If you leave/refresh the site or press the "Generate New Address" button then a new private key will be generated and the previously displayed private key will not be retrievable.	Your Hyper private key should be kept a secret. Whomever you share the private key with has access to spend all the Hyper associated with that address. If you print your wallet then store it in a zip lock bag to keep it safe from water. Treat a paper wallet like cash.</p>
-		<p id="singletip3"><b>Add funds</b> to this wallet by instructing others to send Hyper to your Hyper address.</p>
+		<p id="singletip1"><b>A Hyper wallet</b> is as simple as a single pairing of a Hyper address with its corresponding Hyper private key. Such a wallet has been generated for you in your web browser and is displayed above.</p><br />
+		<p id="singletip2"><b>To safeguard this wallet</b>, you must print or otherwise record the Hyper address and
+			private key. It is important to make a backup copy of the private key and store it in a safe location. This site does not have any knowledge of your private key. If you leave/refresh the site or press the "Generate New Address" button then a new private key will be generated and the previously displayed private key will not be retrievable.	Your Hyper private key should be kept a secret. Whomever you share the private key with has access to spend all the Hyper associated with that address. If you print your wallet, then store it in a zip lock bag to keep it safe from water. Treat a
+			paper wallet like cash.</p><br />
+		<p id="singletip3"><b>Add funds</b> to this wallet by instructing others to send Hyper to your Hyper address.</p><br />
 		<p id="singletip4"><b>Check your balance</b> by going to http://hyper.blockexplorer.cc/ and entering your
-			Hyper address.</p>
-		<p id="singletip5"><b>Spend your Hyper</b> by downloading the Hyper p2p client and importing your private key. Keep in mind when you import your single key to a Hyper p2p client and spend funds your key will be bundled with other private keys in the p2p client wallet. When you perform a transaction your change will be sent to another Hyper address within the p2p client wallet. You must then backup the p2p client wallet and keep it safe as your remaining Hyper will be stored there. Satoshi advised that one should never delete a wallet.</p>
+			Hyper address.</p><br />
+		<p id="singletip5"><b>Spend your Hyper</b> by downloading the Hyper p2p client and importing your private key. Keep in mind when you import your single key to a Hyper p2p client and spend funds, your key will be bundled with other private keys in the p2p client wallet. When you perform a transaction, your change will be sent to another Hyper address within the p2p client wallet. You must then backup the p2p client wallet and keep it safe as your remaining Hyper will be stored there. Satoshi advised that one should never delete a wallet.</p>
 	</div>
 </div>
 
@@ -374,7 +376,8 @@
 	</div>
 	<div id="detailkeyarea">
 		<div class="notes">
-			<span id="detaillabelnote1">Your Hyper Private Key is a unique secret number that only you know. It can be encoded in a number of different formats. Below we show the Bitcoin Address and Public Key that corresponds to your Private Key as well as your Private Key in the most popular encoding formats (WIF, WIFC, HEX, B64).</span>
+			<span id="detaillabelnote1">Your Hyper Private Key is a unique secret number that only you know. It can
+				be encoded in a number of different formats. Below, we show the Hyper Address and Public Key that corresponds to your Private Key as well as your Private Key in the most popular encoding formats (WIF, WIFC, HEX, B64).</span>
 			<br /><br />
 			<span id="detaillabelnote2">The Hyper wallet stores public keys in compressed format. The client also
 				supports import
